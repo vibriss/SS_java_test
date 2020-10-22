@@ -9,6 +9,7 @@ import java.net.InetAddress;
 import java.net.URL;
 import java.net.UnknownHostException;
 import java.util.HashMap;
+import java.util.Map;
 
 
 public class WebPageParser {
@@ -40,14 +41,13 @@ public class WebPageParser {
 
             fileHandler.createHtmlFile(fileName).saveWebPageToFile(url);
 
-            HashMap<String, Integer> map = ParseText.parseHtmlFromFile(fileHandler.getFile());
+            ParseText parseText = new ParseText();
+            Map<String, Integer> map = parseText.parseHtmlFromFile(fileHandler.getFile());
             for (HashMap.Entry pair : map.entrySet()) {
                 System.out.println(pair.getKey() + " " + pair.getValue());
             }
 
         } catch (UnknownHostException e) {
-            System.out.println(e.getMessage());
-        } catch (NullPointerException e) {
             System.out.println(e.getMessage());
         } catch (IOException e) {
             System.out.println(e.getMessage());

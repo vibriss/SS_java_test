@@ -20,7 +20,7 @@ public class FileHandler {
         return this;
     }
 
-    public void saveWebPageToFile(URL url) throws NullPointerException, IOException {
+    public void saveWebPageToFile(URL url) throws IOException {
         if (this.file == null) {
             throw new NullPointerException("File doesn't exist");
         }
