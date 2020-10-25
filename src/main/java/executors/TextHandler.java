@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Logger;
 
 /**
  * Class is used for parsing text from html code, splitting it for words and counting this words.
@@ -21,6 +22,8 @@ public class TextHandler {
      */
     private static final String REG_EXP = "[\\s-,.!?\";:«»\\[\\]()\n\r\t]+";
 
+    private static Logger log = Logger.getLogger(TextHandler.class.getName());
+
     /**
      * Method parses text from html code got from file using Jsoup library.
      * @param file         input file, containing html code to parse
@@ -29,8 +32,10 @@ public class TextHandler {
      */
     public Map parseHtmlFromFile(File file) throws IOException {
         Document doc = Jsoup.parse(file, "UTF-8");
+        log.info("parsed file to document");
 
         String[] arrayOfWords = doc.text().toLowerCase().split(REG_EXP);
+        log.info("document splitted to array");
 
         Map<String, Integer> map = new HashMap<>();
         for (String word : arrayOfWords) {
@@ -41,6 +46,8 @@ public class TextHandler {
                 map.put(word, 1);
             }
         }
+        log.info("added " + map.size() + " entries to map");
+
         return map;
     }
 
@@ -52,5 +59,6 @@ public class TextHandler {
         for (Map.Entry pair : map.entrySet()) {
             System.out.println(pair.getKey() + " " + pair.getValue());
         }
+        log.info("printed " + map.size() + " entries");
     }
 }
