@@ -1,17 +1,17 @@
-import classes.FileHandler;
-import classes.ParseText;
-import org.apache.commons.validator.routines.UrlValidator;
+import executors.FileHandler;
+import executors.TextHandler;
+import executors.UrlHandler;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.InetAddress;
 import java.net.URL;
 import java.net.UnknownHostException;
-import java.util.HashMap;
 import java.util.Map;
 
-
+/**
+ * Class is used for counting unique words of webpage.
+ */
 public class WebPageParser {
 
     public static void main(String[] args) {
@@ -23,29 +23,14 @@ public class WebPageParser {
             String inputUrl = inputUrlReader.readLine();
             inputUrlReader.close();
 
-            UrlValidator urlValidator = new UrlValidator();
-
-            if (!urlValidator.isValid(inputUrl)) {
-                throw new IOException("Invalid URL");
-            }
-
-            URL url = new URL(inputUrl);
-
-            if (!InetAddress.getByName(url.getHost()).isReachable(1000)) {
-                throw new UnknownHostException("Host is not reachable");
-            }
-
-            String fileName = url.getHost();
+            URL url = new UrlHandler().createURL(inputUrl);
 
             FileHandler fileHandler = new FileHandler();
+            fileHandler.saveWebPageToFile(url);
 
-            fileHandler.createHtmlFile(fileName).saveWebPageToFile(url);
-
-            ParseText parseText = new ParseText();
-            Map<String, Integer> map = parseText.parseHtmlFromFile(fileHandler.getFile());
-            for (HashMap.Entry pair : map.entrySet()) {
-                System.out.println(pair.getKey() + " " + pair.getValue());
-            }
+            TextHandler textHandler = new TextHandler();
+            Map<String, Integer> map = textHandler.parseHtmlFromFile(fileHandler.getFile());
+            textHandler.print(map);
 
         } catch (UnknownHostException e) {
             System.out.println(e.getMessage());
