@@ -27,7 +27,7 @@ public class WebPageParser {
                     WebPageParser.class.getResourceAsStream("/logging.properties")
             );
 
-            System.out.println("Еnter page url as \"https://abc.com/\"");
+            System.out.println("Enter page url as \"https://abc.com/\"");
 
             BufferedReader inputUrlReader = new BufferedReader(new InputStreamReader(System.in));
             String inputUrl = inputUrlReader.readLine();
