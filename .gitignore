@@ -1,5 +1,5 @@
 .idea/
 files/*
-logs/
+log
 target/
 /*.iml
